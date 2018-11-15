@@ -1,0 +1,44 @@
+version '1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }
+}
+
+dependencies {
+    def springBootVersion = "2.0.3.RELEASE"
+    def springDataMongodb = "2.1.0.RC1"
+
+    compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
+    compile("org.springframework.data:spring-data-mongodb:${springDataMongodb}")
+
+    compile 'org.projectlombok:lombok:1.16.4'
+
+    // Swagger annotations
+    compile 'io.springfox:springfox-swagger2:2.0.3'
+    compile 'io.springfox:springfox-swagger-ui:2.0.3'
+
+    // Spock
+    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+    testRuntime 'cglib:cglib-nodep:3.2.4'
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
