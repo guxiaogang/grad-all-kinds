@@ -20,7 +20,6 @@ rootProject.name = 'grad-all-kinds'
 include 'security'
 include 'spring-mongo'
 include 'jdk-new-feature'
-include 'jdk-new-feature'
 include 'alg-problems'
 include 'cluster-operator'
 
