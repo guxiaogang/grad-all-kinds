@@ -1,0 +1,23 @@
+Vagrant.configure("2") do |config|
+    config.ssh.insert_key = true
+    #config.ssh.private_key_path = File.expand_path('~/.vagrant.d/insecure_private_key')
+    config.ssh.username = "vagrant"
+    config.ssh.password = "vagrant"
+    (1..5).each do |i|
+	config.vm.define "node#{i}" do |node|
+ 	
+		node.vm.box = "centos7/docker"
+		node.vm.hostname="node#{i}"
+        	node.vm.network "private_network", ip: "192.168.99.5#{i}"
+       
+        	node.vm.synced_folder ".", "/vagrant"
+		node.vm.provider "virtualbox" do |v|        
+			v.name = "node#{i}"
+			v.memory = 1024
+		 end
+       
+		node.vm.provision "shell", inline: <<-SHELL
+       		SHELL
+        end
+    end
+end
