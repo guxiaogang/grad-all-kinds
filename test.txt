@@ -1,0 +1,6 @@
+kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.99.51 --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --ignore-preflight-errors=true
+
+kubeadm join 192.168.99.51:6443 --token a8o2g6.z6iftam55y02usyu --discovery-token-ca-cert-hash sha256:5e939dfd05d546ab892db124c28170c35fbefcf5420787ab5c38c0fceee4b24a
+
+
+Environment="KUBELET_EXTRA_ARGS=--node-ip=VAGRANT_VM_EXTERNAL_IP_HERE"
