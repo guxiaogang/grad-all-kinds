@@ -3,7 +3,7 @@ kind: ReplicationController
 metadata:
   name: myweb
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     app: myweb
   template:
@@ -14,7 +14,6 @@ spec:
       containers:
       - name: myweb
         image: kubeguide/tomcat-app:v1
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         env:
