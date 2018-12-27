@@ -1,4 +1,5 @@
 kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.99.51 --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers --ignore-preflight-errors=true
+kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.99.51  --ignore-preflight-errors=true
 kubeadm init --config /etc/kubernetes/kubeadm-master.config
 
 kubeadm join 192.168.99.51:6443 --token jiznz8.ipy748wtinfv6swf --discovery-token-ca-cert-hash sha256:ed90ed7ff72b3846066376256c1bcb7be835dae1aba801c75358856ee0bd0c14
