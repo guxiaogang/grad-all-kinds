@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alg-problems/alg-problems.iml" filepath="$PROJECT_DIR$/.idea/modules/alg-problems/alg-problems.iml" group="alg-problems" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alg-problems/alg-problems_main.iml" filepath="$PROJECT_DIR$/.idea/modules/alg-problems/alg-problems_main.iml" group="alg-problems" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alg-problems/alg-problems_test.iml" filepath="$PROJECT_DIR$/.idea/modules/alg-problems/alg-problems_test.iml" group="alg-problems" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cluster-operator/cluster-operator.iml" filepath="$PROJECT_DIR$/.idea/modules/cluster-operator/cluster-operator.iml" group="cluster-operator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cluster-operator/cluster-operator_main.iml" filepath="$PROJECT_DIR$/.idea/modules/cluster-operator/cluster-operator_main.iml" group="cluster-operator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/cluster-operator/cluster-operator_test.iml" filepath="$PROJECT_DIR$/.idea/modules/cluster-operator/cluster-operator_test.iml" group="cluster-operator" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/grad-all-kinds.iml" filepath="$PROJECT_DIR$/.idea/modules/grad-all-kinds.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jdk-new-feature/jdk-new-feature.iml" filepath="$PROJECT_DIR$/.idea/modules/jdk-new-feature/jdk-new-feature.iml" group="jdk-new-feature" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jdk-new-feature/jdk-new-feature_main.iml" filepath="$PROJECT_DIR$/.idea/modules/jdk-new-feature/jdk-new-feature_main.iml" group="jdk-new-feature" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jdk-new-feature/jdk-new-feature_test.iml" filepath="$PROJECT_DIR$/.idea/modules/jdk-new-feature/jdk-new-feature_test.iml" group="jdk-new-feature" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/monitoring-alter/monitoring-alter.iml" filepath="$PROJECT_DIR$/.idea/modules/monitoring-alter/monitoring-alter.iml" group="monitoring-alter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/monitoring-alter/monitoring-alter_main.iml" filepath="$PROJECT_DIR$/.idea/modules/monitoring-alter/monitoring-alter_main.iml" group="monitoring-alter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/monitoring-alter/monitoring-alter_test.iml" filepath="$PROJECT_DIR$/.idea/modules/monitoring-alter/monitoring-alter_test.iml" group="monitoring-alter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/security/security.iml" filepath="$PROJECT_DIR$/.idea/modules/security/security.iml" group="security" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/security/security_main.iml" filepath="$PROJECT_DIR$/.idea/modules/security/security_main.iml" group="security" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/security/security_test.iml" filepath="$PROJECT_DIR$/.idea/modules/security/security_test.iml" group="security" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-mongo/spring-mongo.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-mongo/spring-mongo.iml" group="spring-mongo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-mongo/spring-mongo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-mongo/spring-mongo_main.iml" group="spring-mongo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-mongo/spring-mongo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-mongo/spring-mongo_test.iml" group="spring-mongo" />
+    </modules>
+  </component>
+</project>

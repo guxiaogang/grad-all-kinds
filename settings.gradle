@@ -22,4 +22,5 @@ include 'spring-mongo'
 include 'jdk-new-feature'
 include 'alg-problems'
 include 'cluster-operator'
+include 'monitoring-alter'
 
