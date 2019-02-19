@@ -1,0 +1,11 @@
+1 Install splunk
+  cd indexer && docker-compose up -d
+
+2 Create HEC in splunk
+  Setting->Data input->HTTP Event Collector
+
+3 Install Fluentd-HEC
+  a) Get Token from splunk HEC created by step 2.
+  b) Encode token by Base64
+  c) Overwrite splunk_hec_token in file secret.yaml
+  d) Deploy Fluentd-Hec: kubectl apply -f ./Fluentd-hec
