@@ -1,0 +1,80 @@
+version '1.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+        dependencies {
+            classpath(group: 'org.flywaydb', name: 'flyway-gradle-plugin', version: "5.2.4")
+            classpath(group: 'mysql', name: 'mysql-connector-java', version: "5.1.32")
+        }
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'org.flywaydb.flyway'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.spring.io/libs-milestone'
+    }
+}
+
+dependencies {
+    def springBootVersion = "2.0.3.RELEASE"
+
+    compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
+
+    compile("io.shardingsphere:sharding-jdbc-spring-boot-starter:3.1.0")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+    compile("com.alibaba:druid:1.1.9")
+    compile("mysql:mysql-connector-java:5.1.32")
+
+    compile 'org.projectlombok:lombok:1.16.4'
+
+    // Swagger annotations
+    compile 'io.springfox:springfox-swagger2:2.0.3'
+    compile 'io.springfox:springfox-swagger-ui:2.0.3'
+
+    // Spock
+    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+    testRuntime 'cglib:cglib-nodep:3.2.4'
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+flyway {
+    url = 'jdbc:mysql://localhost:3306/ds0'
+    locations = ['filesystem:db/migration']
+    user = 'root'
+    password = '123456'
+    schemas = ['ds0','ds1']
+}
+
+task migrateds0(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+    url = 'jdbc:mysql://localhost:3306/ds0'
+    locations = ['filesystem:db/migration']
+    user = 'root'
+    password = '123456'
+    schemas = ['ds0']
+}
+
+task migrateds1(type: org.flywaydb.gradle.task.FlywayMigrateTask) {
+    url = 'jdbc:mysql://localhost:3306/ds1'
+    locations = ['filesystem:db/migration']
+    user = 'root'
+    password = '123456'
+    schemas = ['ds1']
+}
+
+task flywayDbAll(dependsOn: ['flywayClean','migrateds0', 'migrateds1']) {
+    description = "Clean db.  Apply schema.  Apply testdata."
+}
