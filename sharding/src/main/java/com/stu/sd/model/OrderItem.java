@@ -3,6 +3,7 @@ package com.stu.sd.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -18,9 +19,9 @@ public class OrderItem {
     @Column(name = "product_name")
     private String productName;
     @Column(name = "order_date")
-    private String orderDate;
+    private Date orderDate;
     @Column(name = "pay_date")
-    private String payDate;
+    private Date payDate;
     @Column(name = "total_price")
     private Float totalPrice;
     @Column(name = "discount")
@@ -29,5 +30,6 @@ public class OrderItem {
     private Float payPrice;
 
     @ManyToOne
+    @ElementCollection(targetClass = Order.class)
     private Order order;
 }

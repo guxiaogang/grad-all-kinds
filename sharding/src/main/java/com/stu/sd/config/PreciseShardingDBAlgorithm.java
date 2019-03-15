@@ -5,10 +5,9 @@ import io.shardingsphere.api.algorithm.sharding.standard.PreciseShardingAlgorith
 
 import java.util.Collection;
 
-public class PreciseShardingDBAlgorithm implements PreciseShardingAlgorithm<Integer> {
+public class PreciseShardingDBAlgorithm implements PreciseShardingAlgorithm<Long> {
     @Override
-    public String doSharding(Collection<String> databaseNames,
-                             PreciseShardingValue<Integer> shardingValue) {
+    public String doSharding(Collection<String> databaseNames, PreciseShardingValue<Long> shardingValue) {
         for (String each : databaseNames) {
             if (each.endsWith(shardingValue.getValue() % databaseNames.size() + "")) {
                 return each;

@@ -29,11 +29,11 @@ repositories {
 }
 
 dependencies {
-    def springBootVersion = "2.0.3.RELEASE"
+    def springBootVersion = "2.1.1.RELEASE"
 
     compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
 
-    compile("io.shardingsphere:sharding-jdbc-spring-boot-starter:3.1.0")
+    compile("io.shardingsphere:sharding-jdbc-spring-boot-starter:3.1.0.M1")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     compile("com.alibaba:druid:1.1.9")
     compile("mysql:mysql-connector-java:5.1.32")

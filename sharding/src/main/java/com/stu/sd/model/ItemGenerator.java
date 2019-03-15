@@ -13,8 +13,6 @@ public class ItemGenerator {
             "帆布鞋", "休闲鞋", "板鞋", "篮球鞋", "足球鞋", "运动包", "紧身裤", "休闲套装",
             "卫衣/套头衫", "夹克/风衣", "运动裤", "棉服", "羽绒服", "运动套装", "运动配饰"};
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     private static final int[] discountArray = {50, 60, 70, 80, 85, 90, 100};
 
     public static OrderItem generate() {
@@ -27,8 +25,8 @@ public class ItemGenerator {
         orderItem.setId(random(1000,1000000000));
         orderItem.setBrandName(brand[idxBrand]);
         orderItem.setProductName(product[idxProduct]);
-        orderItem.setOrderDate(sdf.format(new Date()));
-        orderItem.setPayDate(sdf.format(new Date()));
+        orderItem.setOrderDate(new Date());
+        orderItem.setPayDate(new Date());
         orderItem.setTotalPrice(Float.valueOf(totalPrice));
         orderItem.setPayDiscount(discount);
         orderItem.setPayPrice(Float.valueOf(paymentPrice));

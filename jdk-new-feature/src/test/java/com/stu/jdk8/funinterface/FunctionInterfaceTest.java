@@ -31,7 +31,9 @@ public class FunctionInterfaceTest {
 
     @Test
     public void testSupplier() {
+        boolean a = false;
         Supplier<String> supplier = () -> "hello";
         Assert.assertEquals("hello", supplier.get());
+        System.out.printf(String.valueOf(a));
     }
 }
