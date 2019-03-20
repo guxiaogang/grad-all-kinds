@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,7 +23,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findByUserId(long userId) {
+        return orderRepo.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<Order> findById(long id) {
+        return orderRepo.findById(id);
+    }
+
+    @Override
+    public List<Order> findByUserIds(long[] userIds) {
+        return orderRepo.findByUserIdIn(userIds);
+    }
+
+    @Override
     public List<Order> findHint() {
-        return null;
+        return orderRepo.findAll();
     }
 }
