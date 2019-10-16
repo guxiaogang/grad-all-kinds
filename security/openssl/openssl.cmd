@@ -66,3 +66,7 @@ keytool -list -keystore certs/client.keystore -v -storepass 123456
 pause
 
 echo on
+
+加密
+openssl rsautl -sign -inkey iis.key -in ora.txt -out ora_e.txt
+openssl rsautl -verify -inkey iis_pub.key -in ora_e.txt

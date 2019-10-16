@@ -5,6 +5,7 @@ import com.stu.sd.model.Order;
 import com.stu.sd.model.OrderGenerator;
 import com.stu.sd.model.OrderItem;
 import com.stu.sd.service.OrderService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ShardingApplication.class)
 @ActiveProfiles("sharding-range")
+@Ignore
 public class RangeShardingApplicationTests {
 
     @Autowired

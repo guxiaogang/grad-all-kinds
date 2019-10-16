@@ -38,6 +38,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findByUserIdLessThan(long userId) {
+        return orderRepo.findByUserIdLessThan(userId);
+    }
+
+    @Override
     public List<Order> findHint() {
         return orderRepo.findAll();
     }

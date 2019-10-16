@@ -17,4 +17,6 @@ public interface OrderService {
     Optional<Order> findById(long id);
 
     List<Order> findByUserIds(long...userId);
+
+    List<Order> findByUserIdLessThan(long l);
 }

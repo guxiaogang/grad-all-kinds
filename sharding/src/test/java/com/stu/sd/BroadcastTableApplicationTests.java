@@ -3,6 +3,7 @@ package com.stu.sd;
 
 import com.stu.sd.model.Province;
 import com.stu.sd.service.ProvinceService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ShardingApplication.class)
 @ActiveProfiles("sharding-standard")
+@Ignore
 public class BroadcastTableApplicationTests {
     @Autowired
     private ProvinceService provinceService;

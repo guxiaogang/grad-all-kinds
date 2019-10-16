@@ -8,6 +8,7 @@ import com.stu.sd.model.OrderItem;
 import com.stu.sd.service.OrderService;
 import com.stu.sd.service.ProvinceService;
 import io.shardingsphere.core.keygen.DefaultKeyGenerator;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ShardingApplication.class)
 @ActiveProfiles("sharding-standard")
+@Ignore
 public class ShardingStandardTests {
 
     @Autowired
@@ -67,6 +69,11 @@ public class ShardingStandardTests {
 //        order.setId(4l);
 //        orderService.save(order);
         System.out.println(orderService.findByUserIds(2l,3l));
+    }
+
+    @Test
+    public void testRange(){
+        System.out.println(orderService.findByUserIdLessThan(3l));
     }
 }
 

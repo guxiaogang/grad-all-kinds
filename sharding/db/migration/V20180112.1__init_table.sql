@@ -7,6 +7,15 @@ CREATE TABLE province
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin;
 
+CREATE TABLE t_province
+(
+  id      bigint(20) NOT NULL,
+  name    varchar(100) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8
+  COLLATE = utf8_bin;
+
 CREATE TABLE user
 (
   id      bigint(20) NOT NULL,
