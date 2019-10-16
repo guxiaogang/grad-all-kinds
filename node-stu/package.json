@@ -1,0 +1,14 @@
+{
+  "name": "node-stu",
+  "version": "1.0.0",
+  "description": "just for study",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "guxg",
+  "license": "ISC",
+  "dependencies": {
+    "express": "~4.16.2"
+  }
+}

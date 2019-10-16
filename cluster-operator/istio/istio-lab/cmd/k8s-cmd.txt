@@ -1,0 +1,163 @@
+### install docker
+sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sudo yum makecache fast
+sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+sudo yum install -y docker-ce-18.06.1.ce
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://registry.docker-cn.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+
+### install kubeadm
+sudo tee /etc/yum.repos.d/kubernetes.repo <<-'EOF' 
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+sudo yum install -y kubelet-1.12.4 kubeadm-1.12.4 kubectl-1.12.4 ipvsadm kubernetes-cni-0.6.0-0
+
+
+### config basic env
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/' /etc/sysconfig/selinux
+sudo setenforce 0
+
+sudo swapoff -a
+sudo sed -ri 's@(^/.*swap.*)@#\1@g' /etc/fstab
+free -m
+
+sudo modprobe ip_vs
+sudo modprobe ip_vs_rr
+sudo modprobe ip_vs_wrr
+sudo modprobe ip_vs_sh
+sudo modprobe nf_conntrack_ipv4
+sudo lsmod | grep ip_vs
+sudo tee /etc/modules-load.d/k8s-ipvs.conf <<-'EOF'
+ip_vs
+ip_vs_rr
+ip_vs_wrr
+ip_vs_sh
+nf_conntrack_ipv4
+EOF
+
+sudo tee /etc/sysctl.d/k8s.conf <<-'EOF'
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+vm.swappiness=0
+EOF
+sudo sysctl --system
+
+sudo tee /etc/hosts <<-'EOF'
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+11.11.11.111 lab1
+11.11.11.112 lab2
+11.11.11.113 lab3
+EOF
+ping -c2 lab1
+ping -c2 lab2
+ping -c2 lab3
+
+
+### config kubelet
+DOCKER_CGROUPS=$(sudo docker info | grep 'Cgroup' | cut -d' ' -f3)
+echo $DOCKER_CGROUPS
+sudo tee /etc/sysconfig/kubelet <<-EOF
+KUBELET_EXTRA_ARGS="--cgroup-driver=$DOCKER_CGROUPS --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause-amd64:3.1"
+EOF
+sudo cat /etc/sysconfig/kubelet
+sudo systemctl daemon-reload
+sudo systemctl enable docker.service
+sudo systemctl enable kubelet.service
+
+
+### init master
+cat >kubeadm-master.config<<EOF
+apiVersion: kubeadm.k8s.io/v1alpha2
+kind: MasterConfiguration
+kubernetesVersion: v1.12.4
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+api:
+  advertiseAddress: 11.11.11.111
+controllerManagerExtraArgs:
+  node-monitor-grace-period: 10s
+  pod-eviction-timeout: 10s
+networking:
+  podSubnet: 10.244.0.0/16
+kubeProxy:
+  config:
+    mode: ipvs
+EOF
+
+sudo kubeadm config images pull --config kubeadm-master.config
+sudo kubeadm init --config kubeadm-master.config
+
+
+### config kubectl (in another teminal)
+rm -rf $HOME/.kube
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl get nodes
+
+
+### deploy flannel
+curl -s https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml -o kube-flannel.yml
+sed -i 's@quay.io/coreos/flannel:v0.10.0-amd64@registry.cn-shanghai.aliyuncs.com/gcr-k8s/flannel:v0.10.0-amd64@g' kube-flannel.yml
+sed -i '/node-role.kubernetes.io\/master/d' kube-flannel.yml
+sed -i '/operator: Exists/d' kube-flannel.yml
+sed -i '/tolerations:/a \      - operator: Exists' kube-flannel.yml
+sed -i "/--kube-subnet-mgr/a \        - --iface=eth1" kube-flannel.yml
+kubectl apply -f kube-flannel.yml
+kubectl get pods --namespace kube-system
+kubectl get svc --namespace kube-system
+
+
+### test k8s cluster
+kubectl create deployment nginx --image=nginx:alpine
+kubectl expose deployment nginx --name=nginx-service --port=80 --target-port=80
+kubectl expose deployment nginx --type=NodePort --name=nginx-service-nodeport --port=80 --target-port=80
+kubectl get deploy
+kubectl get pods
+kubectl get svc
+
+cat >dns-test.yaml<<EOF
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dns-test
+spec:
+  containers:
+  - image: radial/busyboxplus:curl
+    name: dns-test
+    stdin: true
+    tty: true
+EOF
+kubectl apply -f dns-test.yaml
+kubectl get pod
+
+kubectl exec dns-test -- nslookup kubernetes
+kubectl exec dns-test -- nslookup nginx-service
+kubectl exec dns-test -- nslookup www.baidu.com
+kubectl exec dns-test -- curl -s -I nginx-service
+
+
+### clean test
+kubectl delete deployment nginx
+kubectl delete service nginx-service
+kubectl delete service nginx-service-nodeport
+kubectl delete -f dns-test.yaml
+
+
+### vagrant save k8s-1.12.4
+vagrant snapshot save k8s-1.12.4

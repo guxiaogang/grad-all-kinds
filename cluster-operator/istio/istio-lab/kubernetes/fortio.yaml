@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fortio
+spec:
+  containers:
+  - name: fortio
+    image: istio/fortio:latest_release
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 8080
+      name: http-fortio
+    - containerPort: 8079
+      name: grpc-ping
+    resources:
+      requests:
+        cpu: 50m
+        memory: 50Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi

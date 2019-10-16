@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: service-go-cors
+spec:
+  hosts:
+  - service-go
+  http:
+  - route:
+    - destination:
+        host: service-go
+    corsPolicy:
+      allowOrigin:
+      - http://www.will.com
+      allowMethods:
+      - POST
+      - GET
+      allowHeaders:
+      - X-Custom-Header
+      exposeHeaders:
+      - X-Expose-Header
+      maxAge: 24h
+      allowCredentials: false
